@@ -1,0 +1,19 @@
+import React from 'react';
+
+function ProfileSummary({ userSummary }) {
+  return (
+    <div>
+      <p>{userSummary.nickname}</p>
+      <img src={userSummary.avatar.large} alt='user avatar' />
+      <div>
+        {userSummary.realName ? <p>{userSummary.realName}</p> : null}
+        {userSummary.cityID ? <p>{userSummary.cityID},</p> : null}
+        {userSummary.stateCode ? <p>{userSummary.stateCode},</p> : null}
+        {userSummary.countryCode ? <p>{userSummary.countryCode}</p> : null}
+        {/*userSummary.personaState === 0 ? <p>Offline</p> : <p>Online</p>*/}
+      </div>
+    </div>
+  );
+}
+
+export default ProfileSummary;
