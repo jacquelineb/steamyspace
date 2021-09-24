@@ -1,8 +1,23 @@
 .profileSummary {
-  color: red;
   display: flex;
 }
 
 .basicInfo {
-  color: blue;
+  margin-top: 60px;
+  margin-left: 15px;
+}
+
+
+.username {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.location {
+  font-size: 14px;
+}
+
+.userStatus {
+  position: relative;
+  bottom: 0;
 }

@@ -51,7 +51,9 @@ function Profile() {
           userStatus={userSummary.personaState}
           gameStatus={userSummary.gameExtraInfo}
         />
-        <RecentGamesSection steamUserId={userSummary.steamID} />
+        {userSummary.visibilityState === 3 ? (
+          <RecentGamesSection steamUserId={userSummary.steamID} />
+        ) : null}
       </div>
     </div>
   );
