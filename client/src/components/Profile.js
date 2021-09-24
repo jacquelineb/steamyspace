@@ -3,6 +3,8 @@ import { useLocation } from 'react-router-dom';
 import ProfileSummary from './ProfileSummary';
 import ProfileStatus from './ProfileStatus';
 import RecentGamesSection from './RecentGamesSection';
+import SteamcommunityUrl from './SteamcommunityUrl';
+import styles from '../styles/Profile.module.scss';
 
 function Profile() {
   const [userSummary, setUserSummary] = useState(null);
@@ -38,14 +40,19 @@ function Profile() {
   console.log(userSummary.visibilityState);
 
   return (
-    <div>
-      <ProfileSummary userSummary={userSummary} />
-      <ProfileStatus
-        profileVisibility={userSummary.visibilityState}
-        userStatus={userSummary.personaState}
-        gameStatus={userSummary.gameExtraInfo}
-      />
-      <RecentGamesSection steamUserId={userSummary.steamID} />
+    <div className={styles.profileContainer}>
+      <div className={styles.profileContentLeft}>
+        <ProfileSummary userSummary={userSummary} />
+        <SteamcommunityUrl url={userSummary.url} />
+      </div>
+      <div className={styles.profileContentRight}>
+        <ProfileStatus
+          profileVisibility={userSummary.visibilityState}
+          userStatus={userSummary.personaState}
+          gameStatus={userSummary.gameExtraInfo}
+        />
+        <RecentGamesSection steamUserId={userSummary.steamID} />
+      </div>
     </div>
   );
 }

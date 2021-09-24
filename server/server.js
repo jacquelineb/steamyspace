@@ -5,6 +5,7 @@ const SteamAPI = require('steamapi');
 
 require('dotenv').config();
 const steam = new SteamAPI(process.env.STEAM_API_KEY);
+console.log(steam);
 
 app.use(cors());
 app.use(express.json());
@@ -33,6 +34,7 @@ app.get('/:id/recent_games', async (req, res) => {
     res.status(200).json(recentGamesData);
   } catch (error) {
     console.error(error);
+    res.status(500).json('Server error');
   }
 });
 
