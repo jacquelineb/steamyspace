@@ -30,8 +30,28 @@ app.get('/:id/recent_games', async (req, res) => {
     );
 
     const recentGamesData = recentGamesResponse.response;
-    console.log(recentGamesData);
     res.status(200).json(recentGamesData);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json('Server error');
+  }
+});
+
+app.get('/:id/groups', async (req, res) => {
+  //console.log(req.params.id);
+  try {
+    const userGroups = await steam.getUserGroups(req.params.id);
+    res.status(200).json(userGroups);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json('Server error');
+  }
+});
+
+app.get('/:id/bans', async (req, res) => {
+  try {
+    const userBans = await steam.getUserBans(req.params.id);
+    res.status(200).json(userBans);
   } catch (error) {
     console.error(error);
     res.status(500).json('Server error');
