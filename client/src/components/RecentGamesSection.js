@@ -22,23 +22,30 @@ function RecentGamesSection({ steamUserId }) {
   return (
     <div className={styles.recentGames}>
       <h1>Recently played games</h1>
-      {recentGamesData.games.map((game) => (
-        <div className={styles.gameCard} key={game.appid}>
-          <div className={styles.gameData}>
-            <p className={styles.gameName}>{game.name}</p>
-            <p className={styles.totalHoursPlayed}>
-              {(game.playtime_forever / 60).toFixed(1)} total hours played.
-            </p>
-          </div>
-          <img
-            src={`https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/${game.appid}/${game.img_logo_url}.jpg`}
-            alt={`Cover art for the game ${game.name}.`}
-          ></img>
+      {!recentGamesData.total_count ? (
+        <p>No recent game activity</p>
+      ) : (
+        <div>
+          {recentGamesData.games.map((game) => (
+            <div className={styles.gameCard} key={game.appid}>
+              <div className={styles.gameData}>
+                <p className={styles.gameName}>{game.name}</p>
+                <p className={styles.totalHoursPlayed}>
+                  {(game.playtime_forever / 60).toFixed(1)} total hours played.
+                </p>
+              </div>
+              <img
+                src={`https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/${game.appid}/${game.img_logo_url}.jpg`}
+                alt={`Cover art for the game ${game.name}.`}
+              ></img>
+            </div>
+          ))}
+
+          <a href={`https://steamcommunity.com/profiles/${steamUserId}/games/`}>
+            [View all {recentGamesData.total_count} recently played games]
+          </a>
         </div>
-      ))}
-      <a href={`https://steamcommunity.com/profiles/${steamUserId}/games/`}>
-        [View all {recentGamesData.total_count} recently played games]
-      </a>
+      )}
     </div>
   );
 }
