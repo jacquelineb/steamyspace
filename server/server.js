@@ -58,6 +58,18 @@ app.get('/:id/bans', async (req, res) => {
   }
 });
 
+app.get('/:id/friends', async (req, res) => {
+  try {
+    const userFriends = await steam.getUserFriends(req.params.id);
+    console.log(userFriends);
+    console.log(userFriends.length);
+    res.status(200).json(userFriends);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json('Server error');
+  }
+});
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);

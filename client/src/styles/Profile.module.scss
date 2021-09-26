@@ -2,16 +2,19 @@
   display: flex;
   gap: 25px;
   justify-content: center;
-  margin: 20px auto;
+  margin: 0 auto;
+  padding-top: 30px;
   width: 60%;
+  background-color: white;
 }
 
 .profileContentLeft {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  width: 350px
 }
 
 .profileContentRight {
-  width: 50%;
+  width: 600px;
 }

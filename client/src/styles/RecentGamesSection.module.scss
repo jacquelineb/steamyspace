@@ -1,0 +1,22 @@
+.recentGames {
+  padding-top: 10px;
+
+  h1 {
+    font-size: 16px;
+  }
+
+  a {
+    color: blue;
+    text-decoration: none;
+    font-weight: 600;
+  }
+}
+
+.gameCard {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: left;
+  align-items: center;
+  gap: 10px;
+  margin: 10px 0;
+}

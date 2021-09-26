@@ -4,6 +4,8 @@ import ProfileSummary from './ProfileSummary';
 import ProfileStatus from './ProfileStatus';
 import RecentGamesSection from './RecentGamesSection';
 import SteamcommunityUrl from './SteamcommunityUrl';
+import Blurbs from './Blurbs';
+import UserLinks from './UserLinks';
 import styles from '../styles/Profile.module.scss';
 
 function Profile() {
@@ -44,15 +46,20 @@ function Profile() {
       <div className={styles.profileContentLeft}>
         <ProfileSummary userSummary={userSummary} />
         <SteamcommunityUrl url={userSummary.url} />
+        <UserLinks baseUrl={userSummary.url} />
       </div>
       <div className={styles.profileContentRight}>
         <ProfileStatus
           profileVisibility={userSummary.visibilityState}
           userStatus={userSummary.personaState}
           gameStatus={userSummary.gameExtraInfo}
+          username={userSummary.nickname}
         />
         {userSummary.visibilityState === 3 ? (
-          <RecentGamesSection steamUserId={userSummary.steamID} />
+          <>
+            <RecentGamesSection steamUserId={userSummary.steamID} />
+            <Blurbs username={userSummary.nickname} />
+          </>
         ) : null}
       </div>
     </div>

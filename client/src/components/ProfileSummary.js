@@ -9,7 +9,7 @@ function ProfileSummary({ userSummary }) {
       userStatus = 'Offline';
       break;
     case 1:
-      userStatus = 'Online';
+      userStatus = 'Active';
       break;
     case 3:
       userStatus = 'Away';
@@ -19,27 +19,28 @@ function ProfileSummary({ userSummary }) {
   }
   return (
     <div className={styles.profileSummary}>
-      <div>
-        <p className={styles.username}>{userSummary.nickname}</p>
-        <img src={userSummary.avatar.large} alt='user avatar' />
-      </div>
-      <div className={styles.basicInfo}>
-        {userSummary.realName ? <p>{userSummary.realName}</p> : null}
-        <div className={styles.location}>
-          {userSummary.cityID ? <span>{userSummary.cityID},</span> : null}
-          {userSummary.stateCode ? <span>{userSummary.stateCode}, </span> : null}
-          {userSummary.countryCode ? <span>{userSummary.countryCode}</span> : null}
-        </div>
-        <div className={styles.userStatus}>
-          <p>Status: {userStatus}</p>
-          {userStatus === 'Offline' ? (
-            <>
-              <p>Last online:</p>
-              <p>{formatDate(userSummary.lastLogOff)}</p>
-            </>
+      <p className={styles.username}>{userSummary.nickname}</p>
+      <div className={styles.mainContent}>
+        <img src={userSummary.avatar.large} alt='User avatar' />
+        <div className={styles.userDescription}>
+          {userSummary.realName ? (
+            <p className={styles.realName}>{userSummary.realName}</p>
           ) : null}
+          <div className={styles.location}>
+            {userSummary.cityID ? <span>Location: {userSummary.cityID},</span> : null}
+            {userSummary.stateCode ? <span>{userSummary.stateCode}, </span> : null}
+            {userSummary.countryCode ? <span>{userSummary.countryCode}</span> : null}
+          </div>
+          <div className={styles.userStatus}>
+            <p>Status: {userStatus}</p>
+            {userStatus === 'Offline' ? (
+              <>
+                <p>Last online:</p>
+                <p>{formatDate(userSummary.lastLogOff)}</p>
+              </>
+            ) : null}
+          </div>
         </div>
-        {/*userSummary.personaState === 0 ? <p>Offline</p> : <p>Online</p>*/}
       </div>
     </div>
   );
