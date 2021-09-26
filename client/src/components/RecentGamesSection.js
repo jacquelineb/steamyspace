@@ -35,6 +35,7 @@ function RecentGamesSection({ steamUserId }) {
                 </p>
               </div>
               <img
+                className={styles.gameCover}
                 src={`https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/${game.appid}/${game.img_logo_url}.jpg`}
                 alt={`Cover art for the game ${game.name}.`}
               ></img>
