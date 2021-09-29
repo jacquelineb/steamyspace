@@ -7,6 +7,7 @@ import SteamcommunityUrl from './SteamcommunityUrl';
 import Blurbs from './Blurbs';
 import UserLinks from './UserLinks';
 import UserGroups from './UserGroups';
+import FriendSpace from './FriendSpace';
 import styles from '../styles/Profile.module.scss';
 
 function Profile() {
@@ -56,10 +57,7 @@ function ProfileContentLeft({ userSummary }) {
       {userSummary.visibilityState === 3 ? (
         <>
           <UserLinks baseUrl={userSummary.url} />
-          <UserGroups
-            steamUserId={userSummary.steamID}
-            primaryGroupId={userSummary.primaryGroupID}
-          />
+          <UserGroups username={userSummary.nickname} />
         </>
       ) : null}
     </div>
@@ -79,6 +77,7 @@ function ProfileContentRight({ userSummary }) {
         <>
           <RecentGamesSection steamUserId={userSummary.steamID} />
           <Blurbs username={userSummary.nickname} />
+          <FriendSpace username={userSummary.nickname} />
         </>
       ) : null}
     </div>

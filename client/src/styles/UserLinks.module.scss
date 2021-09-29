@@ -1,25 +1,20 @@
-.userLinks {
-  border: 2px solid black;
-}
-
 .linksContainer {
   display: flex;
   flex-direction: row;
+  justify-content: space-around;
   gap: 20px;
 
   ul {
     list-style: none;
   }
 
+  li {
+    margin: 7px 0;
+  }
+
   a {
     text-decoration: none;
     color: darkblue;
   }
-}
 
-
-.linksHeader {
-  color: white;
-  background-color: #619cd6;
-  border-bottom: 2px solid black;
 }
