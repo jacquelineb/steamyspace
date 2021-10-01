@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from '../styles/UserLinks.module.scss';
-import withContentHeader from './HOC/withContentHeader';
+import withContentContainer from './HOC/withContentContainer';
 
 function UserLinks({ baseUrl }) {
   return (
@@ -41,4 +41,4 @@ function UserLinks({ baseUrl }) {
   );
 }
 UserLinks.displayName = 'Links';
-export default withContentHeader(UserLinks);
+export default withContentContainer(UserLinks, 'box');

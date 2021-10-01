@@ -1,0 +1,25 @@
+.topFriends {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-items: center;
+  margin-top: 15px;
+}
+
+.topFriend {
+  width: 160px;
+  text-align: center;
+}
+
+.topFriendLink {
+  text-decoration: none;
+}
+
+.username {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.friendAvatar {
+  width: 100%;
+}

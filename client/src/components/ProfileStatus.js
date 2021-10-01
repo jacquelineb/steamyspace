@@ -1,19 +1,19 @@
 import React from 'react';
 import styles from '../styles/ProfileStatus.module.scss';
 
-function ProfileStatus({ profileVisibility, userStatus, gameStatus, username }) {
+function ProfileStatus({ isPrivate, activity, username }) {
   return (
     <div className={styles.profileStatus}>
-      {profileVisibility !== 3 ? (
+      {isPrivate ? (
         <p>This profile is set to private.</p>
-      ) : gameStatus ? (
+      ) : activity.game ? (
         <p>
-          {username} is currently playing {gameStatus}
+          {username} is currently playing {activity.game}.
         </p>
-      ) : userStatus === 0 ? (
-        <p>{username} is currently offline</p>
       ) : (
-        <p>{username} is currently online</p>
+        <p>
+          {username} is {activity.status}.
+        </p>
       )}
     </div>
   );

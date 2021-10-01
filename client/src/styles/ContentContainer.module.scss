@@ -1,0 +1,19 @@
+.box {
+  border: 2px solid black;
+}
+
+.boxHeader {
+  color: white;
+  background-color: #619cd6;
+  border-bottom: 2px solid black;
+}
+
+.sectionHeader {
+  color: #f26110;
+  background-color:#ffcb99;
+}
+
+.boxHeader,
+.sectionHeader {
+  font-weight: 600;
+}

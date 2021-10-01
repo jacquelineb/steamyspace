@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import ProfileSummary from './ProfileSummary';
+import User from './User';
 import ProfileStatus from './ProfileStatus';
 import RecentGamesSection from './RecentGamesSection';
 import SteamcommunityUrl from './SteamcommunityUrl';
@@ -9,77 +9,62 @@ import UserLinks from './UserLinks';
 import UserGroups from './UserGroups';
 import FriendSpace from './FriendSpace';
 import styles from '../styles/Profile.module.scss';
+import { steamProfileParser } from '../utils/steamProfileParser';
 
 function Profile() {
-  const [userSummary, setUserSummary] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [steamProfile, setSteamProfile] = useState();
   let { pathname } = useLocation();
 
   useEffect(() => {
-    async function getUserSummary() {
+    (async function getSteamProfile() {
       try {
         const response = await fetch(`http://localhost:5000${pathname}`);
-        console.log(response.status);
-        if (response.status === 200) {
-          setUserSummary(await response.json());
-        } else {
-          setUserSummary(undefined);
-        }
+        const profileHtml = await response.json();
+        const sp = steamProfileParser(profileHtml);
+        setSteamProfile(sp);
       } catch (error) {
         console.error(error);
       }
       setIsLoading(false);
-    }
-    getUserSummary();
+    })();
   }, [pathname]);
 
   if (isLoading) {
     return null;
   }
 
-  if (!userSummary) {
+  if (!steamProfile) {
     return <h1>you should redirect to a 404 page or something</h1>;
   }
 
   return (
     <div className={styles.profileContainer}>
-      <ProfileContentLeft userSummary={userSummary} />
-      <ProfileContentRight userSummary={userSummary} />
-    </div>
-  );
-}
+      <div className={styles.profileContentLeft}>
+        <User user={steamProfile.getUser()} isPrivate={steamProfile.isPrivate()} />
+        <SteamcommunityUrl url={`https://steamcommunity.com${pathname}`} />
+        {steamProfile.isPrivate() ? null : (
+          <>
+            <UserLinks />
+            <UserGroups />
+          </>
+        )}
+      </div>
 
-function ProfileContentLeft({ userSummary }) {
-  return (
-    <div className={styles.profileContentLeft}>
-      <ProfileSummary userSummary={userSummary} />
-      <SteamcommunityUrl url={userSummary.url} />
-      {userSummary.visibilityState === 3 ? (
-        <>
-          <UserLinks baseUrl={userSummary.url} />
-          <UserGroups username={userSummary.nickname} />
-        </>
-      ) : null}
-    </div>
-  );
-}
-
-function ProfileContentRight({ userSummary }) {
-  return (
-    <div className={styles.profileContentRight}>
-      <ProfileStatus
-        profileVisibility={userSummary.visibilityState}
-        userStatus={userSummary.personaState}
-        gameStatus={userSummary.gameExtraInfo}
-        username={userSummary.nickname}
-      />
-      {userSummary.visibilityState === 3 ? (
-        <>
-          <RecentGamesSection steamUserId={userSummary.steamID} />
-          <Blurbs username={userSummary.nickname} />
-          <FriendSpace username={userSummary.nickname} />
-        </>
-      ) : null}
+      <div className={styles.profileContentRight}>
+        <ProfileStatus
+          isPrivate={steamProfile.isPrivate()}
+          username={steamProfile.getUser().username}
+          activity={steamProfile.getActivity()}
+        />
+        {steamProfile.isPrivate() ? null : (
+          <>
+            <RecentGamesSection games={steamProfile.getRecentGames()} />
+            <Blurbs aboutMe={steamProfile.getSummary()} />
+            <FriendSpace friendData={steamProfile.getTopFriendsSection()} />
+          </>
+        )}
+      </div>
     </div>
   );
 }

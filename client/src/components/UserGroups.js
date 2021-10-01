@@ -1,10 +1,9 @@
 import React from 'react';
-import withContentHeader from './HOC/withContentHeader';
+import withContentContainer from './HOC/withContentContainer';
 
-const UserGroups = ({ username }) => {
+const UserGroups = () => {
   return <div>list groups</div>;
 };
 
 UserGroups.displayName = 'Groups';
-export default withContentHeader(UserGroups);
-//export default UserGroups;
+export default withContentContainer(UserGroups, 'box');

@@ -1,14 +1,16 @@
 import React from 'react';
 import styles from '../styles/Blurbs.module.scss';
+import withContentContainer from './HOC/withContentContainer';
 
-function Blurbs({ username }) {
+function Blurbs({ aboutMe }) {
   return (
     <div>
-      <h1 className={styles.mainHeader}>{username}'s Blurbs</h1>
-      <h2 className={styles.subHeader}>About me:</h2>
-      <p>No information given.</p>
+      <p className={styles.subHeader}>About me:</p>
+      <p dangerouslySetInnerHTML={{ __html: `${aboutMe}` }}></p>
     </div>
   );
 }
 
-export default Blurbs;
+Blurbs.displayName = 'Blurbs';
+//export default Blurbs;
+export default withContentContainer(Blurbs);
