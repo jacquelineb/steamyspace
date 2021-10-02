@@ -6,11 +6,10 @@ function Blurbs({ aboutMe }) {
   return (
     <div>
       <p className={styles.subHeader}>About me:</p>
-      <p dangerouslySetInnerHTML={{ __html: `${aboutMe}` }}></p>
+      <p dangerouslySetInnerHTML={{ __html: `${aboutMe}` }} />
     </div>
   );
 }
 
 Blurbs.displayName = 'Blurbs';
-//export default Blurbs;
 export default withContentContainer(Blurbs);

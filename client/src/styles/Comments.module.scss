@@ -1,0 +1,40 @@
+.comments {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.comment {
+  display: flex;
+  flex-direction: row;
+  gap: 2px
+}
+
+.author {
+  background-color: #fd962f;
+  flex: 0 0 30%;
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 20px;
+}
+
+.authorAvatar {
+  width: 70%;
+}
+
+.authorProfileLink {
+  text-decoration: none;
+  color: blue;
+}
+
+.bodyContainer {
+  background-color: #f9d7b4;
+  flex: auto;
+  padding-top: 4px;
+  padding-left: 4px;
+}
+
+.timeStamp {
+  font-weight: bold;
+  margin-bottom: 5px;
+}

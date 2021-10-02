@@ -22,6 +22,18 @@ app.get('/:type(profiles|id)/:id', async (req, res) => {
   }
 });
 
+app.get('/:type(profiles|id)/:id/comments/:pageNum', async (req, res) => {
+  const { type, id, pageNum } = req.params;
+  try {
+    const response = await axios.get(
+      `${STEAMCOMMUNITY_URL_BASE}/${type}/${id}/allcomments?ctp=${pageNum}`
+    );
+    res.status(200).json(response.data);
+  } catch (error) {
+    console.error(error);
+  }
+});
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);

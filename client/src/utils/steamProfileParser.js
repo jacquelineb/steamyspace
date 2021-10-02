@@ -3,6 +3,21 @@ import * as cheerio from 'cheerio';
 function steamProfileParser(profileHtml) {
   const $ = cheerio.load(profileHtml);
 
+  const profileNotExist = $('.error_ctn')['0'];
+  if (profileNotExist) {
+    return null;
+  }
+
+  return {
+    isPrivate,
+    getActivity,
+    getCommentCount,
+    getRecentGames,
+    getSummary,
+    getUser,
+    getTopFriendsSection,
+  };
+
   function isPrivate() {
     return $('.private_profile')['0'] ? true : false;
   }
@@ -83,12 +98,40 @@ function steamProfileParser(profileHtml) {
     };
   }
 
-  const profileNotExist = $('.error_ctn')['0'];
-  if (profileNotExist) {
-    return null;
+  function getCommentCount() {
+    const commentSection = $('.commentthread_header')['0'];
+    if (commentSection) {
+      // Comment count is only displayed if user has over 6 comments on their page.
+      // If it's not displayed, then the only way to get it is to count the number of nodes that have a class of 'commentthread_comment'
+      const countNode = $('span[id$="_totalcount"]', commentSection);
+      if (countNode.length) {
+        console.log('in here');
+        return parseInt(countNode.text());
+      } else {
+        return parseInt($('.commentthread_comment').length);
+      }
+    } else {
+      return 0;
+    }
   }
-
-  return { isPrivate, getActivity, getRecentGames, getSummary, getUser, getTopFriendsSection };
 }
 
-export { steamProfileParser };
+function steamCommentsParser(commentsHtml) {
+  const $ = cheerio.load(commentsHtml);
+  return $('.commentthread_comment')
+    .toArray()
+    .map((comment) => {
+      const commentContent = {
+        author: {
+          username: $('bdi', comment).text(),
+          avatar: $('img', comment).attr('src').slice(0, -4) + '_full.jpg',
+          profilePath: $('.commentthread_author_link', comment).attr('href').substr(26),
+        },
+        timeStamp: $('.commentthread_comment_timestamp', comment).text().trim(),
+        body: $('.commentthread_comment_text', comment).html().trim(),
+      };
+      return commentContent;
+    });
+}
+
+export { steamProfileParser, steamCommentsParser };

@@ -7,21 +7,24 @@ import SteamcommunityUrl from './SteamcommunityUrl';
 import Blurbs from './Blurbs';
 import UserLinks from './UserLinks';
 import UserGroups from './UserGroups';
+import Comments from './Comments';
 import FriendSpace from './FriendSpace';
 import styles from '../styles/Profile.module.scss';
-import { steamProfileParser } from '../utils/steamProfileParser';
+import { steamProfileParser, steamCommentsParser } from '../utils/steamProfileParser';
 
 function Profile() {
   const [isLoading, setIsLoading] = useState(true);
   const [steamProfile, setSteamProfile] = useState();
+  const [commentsPageNum, setCommentsPageNum] = useState(1);
+  const [comments, setComments] = useState([]);
   let { pathname } = useLocation();
 
   useEffect(() => {
     (async function getSteamProfile() {
       try {
         const response = await fetch(`http://localhost:5000${pathname}`);
-        const profileHtml = await response.json();
-        const sp = steamProfileParser(profileHtml);
+        const profileData = await response.json();
+        const sp = steamProfileParser(profileData);
         setSteamProfile(sp);
       } catch (error) {
         console.error(error);
@@ -29,6 +32,23 @@ function Profile() {
       setIsLoading(false);
     })();
   }, [pathname]);
+
+  useEffect(() => {
+    if (steamProfile && !steamProfile.isPrivate()) {
+      (async function getSteamProfileComments() {
+        try {
+          const response = await fetch(
+            `http://localhost:5000${pathname}/comments/${commentsPageNum}`
+          );
+          const commentsData = await response.json();
+          //console.log(steamCommentsParser(commentsData));
+          setComments(steamCommentsParser(commentsData));
+        } catch (error) {
+          console.error(error);
+        }
+      })();
+    }
+  }, [steamProfile, pathname, commentsPageNum]);
 
   if (isLoading) {
     return null;
@@ -62,6 +82,10 @@ function Profile() {
             <RecentGamesSection games={steamProfile.getRecentGames()} />
             <Blurbs aboutMe={steamProfile.getSummary()} />
             <FriendSpace friendData={steamProfile.getTopFriendsSection()} />
+            <Comments
+              commentsList={comments}
+              totalNumComments={steamProfile.getCommentCount()}
+            />
           </>
         )}
       </div>
