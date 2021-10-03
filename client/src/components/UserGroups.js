@@ -1,9 +1,34 @@
 import React from 'react';
 import withContentContainer from './HOC/withContentContainer';
+import styles from '../styles/UserGroups.module.scss';
 
-const UserGroups = () => {
-  return <div>list groups</div>;
-};
+function UserGroups({ groups }) {
+  if (!groups) {
+    return null;
+  }
+
+  return (
+    <div className={styles.groups}>
+      {groups.map((group, idx) => {
+        return (
+          <div className={styles.group} key={idx}>
+            <div className={styles.groupDescription}>
+              <p>{group.name}</p>
+              <p className={styles.memberCount}>{group.memberCount}</p>
+            </div>
+            <div className={styles.avatarContainer}>
+              <img
+                className={styles.avatar}
+                src={group.avatar}
+                alt={`avatar for the group '${group.name}"`}
+              />
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
 
 UserGroups.displayName = 'Groups';
 export default withContentContainer(UserGroups, 'box');

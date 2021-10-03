@@ -12,6 +12,7 @@ function steamProfileParser(profileHtml) {
     isPrivate,
     getActivity,
     getCommentCount,
+    getGroups,
     getRecentGames,
     getSummary,
     getUser,
@@ -29,6 +30,25 @@ function steamProfileParser(profileHtml) {
       game,
       status,
     };
+  }
+
+  function getGroups() {
+    const groupNodes = $('.profile_group');
+    if (groupNodes.length) {
+      const groups = groupNodes.toArray().map((groupNode) => {
+        const name = $('.whiteLink', groupNode).text().trim();
+        let avatar = $('.profile_group_avatar img', groupNode).attr('src');
+        if (avatar.indexOf('_medium.jpg') === -1) {
+          avatar = avatar.replace('.jpg', '_medium.jpg');
+        }
+        const memberCount = $('.profile_group_membercount', groupNode).text();
+        return { name, avatar, memberCount };
+      });
+
+      return groups;
+    } else {
+      return null;
+    }
   }
 
   function getUser() {
@@ -105,7 +125,6 @@ function steamProfileParser(profileHtml) {
       // If it's not displayed, then the only way to get it is to count the number of nodes that have a class of 'commentthread_comment'
       const countNode = $('span[id$="_totalcount"]', commentSection);
       if (countNode.length) {
-        console.log('in here');
         return parseInt(countNode.text());
       } else {
         return parseInt($('.commentthread_comment').length);

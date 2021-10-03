@@ -20,7 +20,6 @@ function Comments({ commentsList, totalNumComments }) {
 
 function Comment({ comment }) {
   const { author, timeStamp, body } = comment;
-  console.log(author);
   return (
     <div className={styles.comment}>
       <div className={styles.author}>

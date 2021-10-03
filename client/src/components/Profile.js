@@ -66,7 +66,7 @@ function Profile() {
         {steamProfile.isPrivate() ? null : (
           <>
             <UserLinks />
-            <UserGroups />
+            <UserGroups groups={steamProfile.getGroups()} />
           </>
         )}
       </div>

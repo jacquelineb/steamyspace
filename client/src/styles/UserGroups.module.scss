@@ -1,0 +1,30 @@
+.group {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  margin: 4px
+}
+
+.memberCount {
+  font-size: 14px;
+}
+
+.avatarContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 64px;
+  height: 64px;
+  background-color: #d7e6fd;
+}
+
+.avatar {
+  width: 85%;
+}
+
+.groupDescription {
+  width: 100%;
+  background-color: #afcff6;
+  padding-left: 10px;
+  padding-top: 4px;
+}
