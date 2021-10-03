@@ -4,9 +4,18 @@ $light-orange: #f9d7b4;
 $blue: #afcff6;
 $light-blue: #d7e6fd;
 $dark-blue: #619cd6;
+$darkest-blue: #123577;
 
 @mixin link-style {
-  color: #123577;
+  color: $darkest-blue;
   text-decoration: none;
   font-weight: 600;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+@mixin content-box-border {
+  border: 2px solid $dark-blue;
 }

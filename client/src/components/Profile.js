@@ -15,6 +15,7 @@ import { steamProfileParser, steamCommentsParser } from '../utils/steamProfilePa
 function Profile() {
   const [isLoading, setIsLoading] = useState(true);
   const [steamProfile, setSteamProfile] = useState();
+  const [steamProfileUrl, setSteamProfileUrl] = useState('');
   const [commentsPageNum, setCommentsPageNum] = useState(1);
   const [comments, setComments] = useState([]);
   let { pathname } = useLocation();
@@ -34,6 +35,12 @@ function Profile() {
   }, [pathname]);
 
   useEffect(() => {
+    if (steamProfile) {
+      setSteamProfileUrl(`https://steamcommunity.com${pathname}`);
+    }
+  }, [steamProfile, pathname]);
+
+  useEffect(() => {
     if (steamProfile && !steamProfile.isPrivate()) {
       (async function getSteamProfileComments() {
         try {
@@ -41,7 +48,6 @@ function Profile() {
             `http://localhost:5000${pathname}/comments/${commentsPageNum}`
           );
           const commentsData = await response.json();
-          //console.log(steamCommentsParser(commentsData));
           setComments(steamCommentsParser(commentsData));
         } catch (error) {
           console.error(error);
@@ -62,10 +68,10 @@ function Profile() {
     <div className={styles.profileContainer}>
       <div className={styles.profileContentLeft}>
         <User user={steamProfile.getUser()} isPrivate={steamProfile.isPrivate()} />
-        <SteamcommunityUrl url={`https://steamcommunity.com${pathname}`} />
+        <SteamcommunityUrl url={steamProfileUrl} />
         {steamProfile.isPrivate() ? null : (
           <>
-            <UserLinks />
+            <UserLinks baseUrl={steamProfileUrl} />
             <UserGroups groups={steamProfile.getGroups()} />
           </>
         )}

@@ -1,14 +1,16 @@
-.steamcommunityUrl {
-  border: 2px solid black;
-  width: 340px;
-  padding: 2px 5px;
+@import 'theme';
 
-  p {
-    font-weight: bold;
-  }
-  a {
-    font-size: 12px;
-    text-decoration: none;
-    color: blue;
-  }
+.steamcommunityUrl {
+  @include content-box-border;
+  padding: 2px 5px;
+}
+
+.header {
+  font-weight: bold;
+}
+
+.url {
+  font-size: 12px;
+  text-decoration: none;
+  color: blue;
 }
