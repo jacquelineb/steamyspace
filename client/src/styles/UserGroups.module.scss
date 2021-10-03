@@ -1,8 +1,23 @@
+@import 'theme';
+
 .group {
   display: flex;
   flex-direction: row;
   gap: 4px;
-  margin: 4px
+  margin: 4px;
+  min-height: 64px;
+
+}
+
+.groupDescription {
+  background-color: $blue;
+  padding: 5px;
+  overflow-wrap: break-word;
+  width: 80%;
+}
+
+.name {
+  @include link-style;
 }
 
 .memberCount {
@@ -14,17 +29,9 @@
   justify-content: center;
   align-items: center;
   width: 64px;
-  height: 64px;
-  background-color: #d7e6fd;
+  background-color: $light-blue;
 }
 
 .avatar {
   width: 85%;
-}
-
-.groupDescription {
-  width: 100%;
-  background-color: #afcff6;
-  padding-left: 10px;
-  padding-top: 4px;
 }

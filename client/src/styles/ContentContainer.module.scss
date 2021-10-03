@@ -1,16 +1,17 @@
+@import 'theme';
+
 .box {
-  border: 2px solid black;
+  border: 2px solid $dark-blue;
 }
 
 .boxHeader {
   color: white;
-  background-color: #619cd6;
-  border-bottom: 2px solid black;
+  background-color: $dark-blue;
 }
 
 .sectionHeader {
-  color: #f26110;
-  background-color:#ffcb99;
+  color: $orange;
+  background-color: $light-orange;
 }
 
 .boxHeader,

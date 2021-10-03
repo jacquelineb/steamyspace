@@ -13,7 +13,7 @@ function UserGroups({ groups }) {
         return (
           <div className={styles.group} key={idx}>
             <div className={styles.groupDescription}>
-              <p>{group.name}</p>
+              <p className={styles.name}>{group.name}</p>
               <p className={styles.memberCount}>{group.memberCount}</p>
             </div>
             <div className={styles.avatarContainer}>
