@@ -6,6 +6,8 @@ $light-blue: #d7e6fd;
 $dark-blue: #619cd6;
 $darkest-blue: #123577;
 
+$red: rgb(175, 0, 0);
+
 @mixin link-style {
   color: $darkest-blue;
   text-decoration: none;

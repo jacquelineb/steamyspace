@@ -1,3 +1,5 @@
+@import 'theme';
+
 .comments {
   display: flex;
   flex-direction: column;
@@ -7,7 +9,13 @@
 .comment {
   display: flex;
   flex-direction: row;
-  gap: 2px
+  gap: 2px;
+  overflow-wrap: anywhere;
+}
+
+.count {
+  color: $red;
+  font-weight: 600;
 }
 
 .author {
@@ -22,16 +30,20 @@
   width: 70%;
 }
 
-.authorProfileLink {
-  text-decoration: none;
-  color: blue;
+.authorName {
+  display: inline-block;
+  padding: 0 5px 2px;
+  @include link-style;
 }
 
 .bodyContainer {
   background-color: #f9d7b4;
   flex: auto;
-  padding-top: 4px;
-  padding-left: 4px;
+  padding: 4px;
+
+  a {
+    @include link-style;
+  }
 }
 
 .timeStamp {

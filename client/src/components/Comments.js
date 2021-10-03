@@ -7,7 +7,8 @@ function Comments({ commentsList, totalNumComments }) {
   return (
     <div>
       <p>
-        Displaying {commentsList.length} of {totalNumComments} comments.
+        Displaying <span className={styles.count}>{commentsList.length}</span> of{' '}
+        <span className={styles.count}>{totalNumComments}</span> comments.
       </p>
       <div className={styles.comments}>
         {commentsList.map((comment, idx) => {
@@ -23,8 +24,10 @@ function Comment({ comment }) {
   return (
     <div className={styles.comment}>
       <div className={styles.author}>
-        <Link className={styles.authorProfileLink} to={author.profilePath}>
-          <p>{author.username}</p>
+        <Link to={author.profilePath}>
+          <p className={styles.authorName}>{author.username}</p>
+        </Link>
+        <Link to={author.profilePath}>
           <img
             className={styles.authorAvatar}
             src={author.avatar}
