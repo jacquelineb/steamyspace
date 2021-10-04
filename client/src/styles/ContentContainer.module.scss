@@ -10,11 +10,16 @@
 }
 
 .sectionHeader {
-  color: $orange;
+  color: $dark-orange;
   background-color: $light-orange;
 }
 
 .boxHeader,
 .sectionHeader {
   font-weight: 600;
+  padding-left: 15px;
+}
+
+.mainContent {
+  padding: 4px;
 }

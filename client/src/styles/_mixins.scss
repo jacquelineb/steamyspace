@@ -1,7 +1,7 @@
 @import 'colors';
 
-@mixin link-style {
-  color: $darkest-blue;
+@mixin link-style($link-color: $darkest-blue) {
+  color: $link-color;
   text-decoration: none;
   font-weight: bold;
 
@@ -12,6 +12,7 @@
 
 @mixin item-count-descriptor {
   font-weight: 600;
+  margin-bottom: 5px;
 
   .count {
     color: $red;

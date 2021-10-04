@@ -1,9 +1,16 @@
-.mainHeader {
-  background-color:#ffcb99;
-}
+@import 'colors';
 
 .mainHeader,
 .subHeader {
-  color: #f26110;
+  color: $dark-orange;
   font-size: 15px;
+}
+
+.mainHeader {
+  background-color: $light-orange;
+}
+
+
+.subHeader {
+  font-weight: 600;
 }

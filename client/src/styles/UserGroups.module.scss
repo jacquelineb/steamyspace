@@ -1,11 +1,16 @@
 @import 'colors';
 @import 'mixins';
 
+.groups {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
 .group {
   display: flex;
   flex-direction: row;
   gap: 4px;
-  margin: 4px;
   min-height: 64px;
 
 }

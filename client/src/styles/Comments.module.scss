@@ -20,7 +20,7 @@
 }
 
 .author {
-  background-color: #fd962f;
+  background-color: $orange;
   flex: 0 0 30%;
   text-align: center;
   padding-top: 10px;
@@ -29,6 +29,7 @@
 
 .authorAvatar {
   width: 70%;
+  margin-top: 10px;
 }
 
 .authorName {
@@ -37,7 +38,7 @@
 }
 
 .bodyContainer {
-  background-color: #f9d7b4;
+  background-color: $light-orange;
   flex: auto;
   padding: 4px;
 
