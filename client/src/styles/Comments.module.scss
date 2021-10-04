@@ -1,4 +1,5 @@
-@import 'theme';
+@import 'colors';
+@import 'mixins';
 
 .comments {
   display: flex;
@@ -13,9 +14,9 @@
   overflow-wrap: anywhere;
 }
 
-.count {
-  color: $red;
+.countDescriptor {
   font-weight: 600;
+  @include item-count-descriptor;
 }
 
 .author {
@@ -31,7 +32,6 @@
 }
 
 .authorName {
-  display: inline-block;
   padding: 0 5px 2px;
   @include link-style;
 }

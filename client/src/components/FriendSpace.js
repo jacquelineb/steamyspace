@@ -6,7 +6,10 @@ import withContentContainer from './HOC/withContentContainer';
 function FriendSpace({ friendData }) {
   return (
     <div>
-      <p>Blahalsdjf;asjdf has {friendData.totalFriends} Friends</p>
+      <p className={styles.countDescriptor}>
+        Blahalsdjf;asjdf has <span className={styles.count}>{friendData.totalFriends}</span>{' '}
+        Friends
+      </p>
       <div className={styles.topFriends}>
         {friendData.topFriends.map((topFriend, idx) => {
           return (

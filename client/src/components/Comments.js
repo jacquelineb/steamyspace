@@ -6,7 +6,7 @@ import styles from '../styles/Comments.module.scss';
 function Comments({ commentsList, totalNumComments }) {
   return (
     <div>
-      <p>
+      <p className={styles.countDescriptor}>
         Displaying <span className={styles.count}>{commentsList.length}</span> of{' '}
         <span className={styles.count}>{totalNumComments}</span> comments.
       </p>
@@ -24,16 +24,18 @@ function Comment({ comment }) {
   return (
     <div className={styles.comment}>
       <div className={styles.author}>
-        <Link to={author.profilePath}>
-          <p className={styles.authorName}>{author.username}</p>
+        <Link className={styles.authorName} to={author.profilePath}>
+          {author.username}
         </Link>
-        <Link to={author.profilePath}>
-          <img
-            className={styles.authorAvatar}
-            src={author.avatar}
-            alt={`avatar for user '${author.username}'`}
-          />
-        </Link>
+        <div>
+          <Link to={author.profilePath}>
+            <img
+              className={styles.authorAvatar}
+              src={author.avatar}
+              alt={`avatar for user '${author.username}'`}
+            />
+          </Link>
+        </div>
       </div>
       <div className={styles.bodyContainer}>
         <p className={styles.timeStamp}>{timeStamp}</p>

@@ -1,3 +1,5 @@
+@import 'mixins';
+
 .topFriends {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -13,6 +15,10 @@
 
 .topFriendLink {
   text-decoration: none;
+}
+
+.countDescriptor {
+  @include item-count-descriptor;
 }
 
 .username {
