@@ -1,23 +1,25 @@
 @import 'colors';
 
-.box {
+@mixin header-style($color, $bg-color) {
+  color: $color;
+  background-color: $bg-color;
+  font-weight: 600;
+  padding-left: 15px;
+  padding-bottom: 2px;
+}
+
+.boxed {
+  > .header {
+    @include header-style(white, $dark-blue);
+  }
+
   border: 2px solid $dark-blue;
 }
 
-.boxHeader {
-  color: white;
-  background-color: $dark-blue;
-}
-
-.sectionHeader {
-  color: $dark-orange;
-  background-color: $light-orange;
-}
-
-.boxHeader,
-.sectionHeader {
-  font-weight: 600;
-  padding-left: 15px;
+.noBox {
+  > .header {
+    @include header-style($dark-orange, $light-orange);
+  }
 }
 
 .mainContent {

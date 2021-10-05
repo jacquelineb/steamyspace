@@ -30,5 +30,4 @@ function FriendSpace({ username, top, totalCount }) {
   );
 }
 
-FriendSpace.displayName = 'Friends';
-export default withContentContainer(FriendSpace);
+export default withContentContainer(FriendSpace, 'Friends');

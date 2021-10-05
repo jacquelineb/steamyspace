@@ -1,18 +1,15 @@
 import React from 'react';
 import styles from '../../styles/ContentContainer.module.scss';
 
-const withContentContainer = (WrappedComponent, containerStyle) => {
-  console.log(WrappedComponent);
+function withContentContainer(WrappedComponent, contentName, withBox = false) {
   return (props) => (
-    <div className={containerStyle === 'box' ? styles.box : null}>
-      <p className={containerStyle === 'box' ? styles.boxHeader : styles.sectionHeader}>
-        My {WrappedComponent.displayName}
-      </p>
+    <div className={withBox ? styles.boxed : styles.noBox}>
+      <p className={styles.header}>My {contentName}</p>
       <div className={styles.mainContent}>
         <WrappedComponent {...props} />
       </div>
     </div>
   );
-};
+}
 
 export default withContentContainer;

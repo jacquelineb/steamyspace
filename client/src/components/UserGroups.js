@@ -30,5 +30,4 @@ function UserGroups({ groups }) {
   );
 }
 
-UserGroups.displayName = 'Groups';
-export default withContentContainer(UserGroups, 'box');
+export default withContentContainer(UserGroups, 'Groups', true);

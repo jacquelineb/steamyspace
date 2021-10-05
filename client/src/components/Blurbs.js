@@ -11,5 +11,4 @@ function Blurbs({ aboutMe }) {
   );
 }
 
-Blurbs.displayName = 'Blurbs';
-export default withContentContainer(Blurbs);
+export default withContentContainer(Blurbs, 'Blurbs');

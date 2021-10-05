@@ -41,9 +41,9 @@ function UserLinks({ baseUrl }) {
   return (
     <div className={styles.linksContainer}>
       <div className={styles.linksLeft}>
-        {PATHS.slice(0, PATHS.length / 2).map((pathObj) => {
+        {PATHS.slice(0, PATHS.length / 2).map((pathObj, idx) => {
           return (
-            <div className={styles.linkContainer}>
+            <div className={styles.linkContainer} key={idx}>
               <a className={styles.link} href={`${baseUrl}${pathObj.path}`}>
                 {pathObj.name}
               </a>
@@ -52,9 +52,9 @@ function UserLinks({ baseUrl }) {
         })}
       </div>
       <div className={styles.linksRight}>
-        {PATHS.slice(PATHS.length / 2).map((pathObj) => {
+        {PATHS.slice(PATHS.length / 2).map((pathObj, idx) => {
           return (
-            <div className={styles.linkContainer}>
+            <div className={styles.linkContainer} key={idx + PATHS.length / 2}>
               <a className={styles.link} href={`${baseUrl}${pathObj.path}`}>
                 {pathObj.name}
               </a>
@@ -65,5 +65,5 @@ function UserLinks({ baseUrl }) {
     </div>
   );
 }
-UserLinks.displayName = 'Links';
-export default withContentContainer(UserLinks, 'box');
+
+export default withContentContainer(UserLinks, 'Links', true);

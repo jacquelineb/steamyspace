@@ -45,5 +45,4 @@ function Comment({ comment }) {
   );
 }
 
-Comments.displayName = 'Comments';
-export default withContentContainer(Comments);
+export default withContentContainer(Comments, 'Comments');
