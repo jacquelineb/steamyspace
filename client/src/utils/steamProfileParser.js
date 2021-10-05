@@ -16,7 +16,8 @@ function steamProfileParser(profileHtml) {
     getRecentGames,
     getSummary,
     getUser,
-    getTopFriendsSection,
+    getTopFriends,
+    getFriendCount,
   };
 
   function isPrivate() {
@@ -98,8 +99,17 @@ function steamProfileParser(profileHtml) {
     return $('.profile_summary').html().trim();
   }
 
-  function getTopFriendsSection() {
-    const totalFriends = $('.profile_count_link_total', '.profile_friend_links').text().trim();
+  function getFriendCount() {
+    let friendCount = $('.profile_count_link_total', '.profile_friend_links').text().trim();
+    if (!friendCount) {
+      return 0;
+    } else {
+      friendCount = friendCount.replace(',', '');
+      return parseInt(friendCount);
+    }
+  }
+
+  function getTopFriends() {
     const topFriends = $('.friendBlock', '.profile_topfriends')
       .toArray()
       .map((friend) => {
@@ -112,10 +122,7 @@ function steamProfileParser(profileHtml) {
         return friendData;
       });
 
-    return {
-      totalFriends,
-      topFriends,
-    };
+    return topFriends;
   }
 
   function getCommentCount() {
@@ -125,7 +132,7 @@ function steamProfileParser(profileHtml) {
       // If it's not displayed, then the only way to get it is to count the number of nodes that have a class of 'commentthread_comment'
       const countNode = $('span[id$="_totalcount"]', commentSection);
       if (countNode.length) {
-        return parseInt(countNode.text());
+        return parseInt(countNode.text().replace(',', ''));
       } else {
         return parseInt($('.commentthread_comment').length);
       }

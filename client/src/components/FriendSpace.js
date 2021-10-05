@@ -3,15 +3,14 @@ import { Link } from 'react-router-dom';
 import styles from '../styles/FriendSpace.module.scss';
 import withContentContainer from './HOC/withContentContainer';
 
-function FriendSpace({ friendData }) {
+function FriendSpace({ username, top, totalCount }) {
   return (
     <div>
       <p className={styles.countDescriptor}>
-        Blahalsdjf;asjdf has <span className={styles.count}>{friendData.totalFriends}</span>{' '}
-        Friends
+        {username} has <span className={styles.count}>{totalCount}</span> friends.
       </p>
       <div className={styles.topFriends}>
-        {friendData.topFriends.map((topFriend, idx) => {
+        {top.map((topFriend, idx) => {
           return (
             <div className={styles.topFriend} key={idx}>
               <Link className={styles.topFriendLink} to={`${topFriend.profileUrl.substr(26)}`}>
@@ -22,7 +21,11 @@ function FriendSpace({ friendData }) {
           );
         })}
       </div>
-      <a href='#'>View all of replace this's Friends</a>
+      <div className={styles.viewAllFriendsContainer}>
+        <a className={styles.viewFriendsLink} href='#'>
+          View All of {username}'s Friends
+        </a>
+      </div>
     </div>
   );
 }

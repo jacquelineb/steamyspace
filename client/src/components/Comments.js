@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 import withContentContainer from './HOC/withContentContainer';
 import styles from '../styles/Comments.module.scss';
 
-function Comments({ commentsList, totalNumComments }) {
+function Comments({ commentsList, totalCount }) {
   return (
     <div>
       <p className={styles.countDescriptor}>
         Displaying <span className={styles.count}>{commentsList.length}</span> of{' '}
-        <span className={styles.count}>{totalNumComments}</span> comments.
+        <span className={styles.count}>{totalCount}</span> comments.
       </p>
       <div className={styles.comments}>
         {commentsList.map((comment, idx) => {

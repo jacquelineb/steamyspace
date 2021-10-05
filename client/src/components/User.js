@@ -11,7 +11,7 @@ function User({ user, isPrivate }) {
 
         <div className={styles.userDescription}>
           {isPrivate ? (
-            <p>Add this user to find out more.</p>
+            <p>My privacy settings don't allow you to view this data. =(</p>
           ) : !realName && !location ? (
             <p>No information given.</p>
           ) : (

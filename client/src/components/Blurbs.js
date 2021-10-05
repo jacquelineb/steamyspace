@@ -4,8 +4,8 @@ import withContentContainer from './HOC/withContentContainer';
 
 function Blurbs({ aboutMe }) {
   return (
-    <div>
-      <p className={styles.subHeader}>About me:</p>
+    <div className={styles.aboutSection}>
+      <span className={styles.subHeader}>About me:</span>
       <p dangerouslySetInnerHTML={{ __html: `${aboutMe}` }} />
     </div>
   );

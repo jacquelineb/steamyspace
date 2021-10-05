@@ -14,19 +14,44 @@ import { steamProfileParser, steamCommentsParser } from '../utils/steamProfilePa
 
 function Profile() {
   const [isLoading, setIsLoading] = useState(true);
-  const [steamProfile, setSteamProfile] = useState();
-  const [steamProfileUrl, setSteamProfileUrl] = useState('');
-  const [commentsPageNum, setCommentsPageNum] = useState(1);
-  const [comments, setComments] = useState([]);
   let { pathname } = useLocation();
+
+  const [user, setUser] = useState();
+  const [userStatus, setUserStatus] = useState();
+  const [profileIsPrivate, setProfileIsPrivate] = useState(true);
+  const [groups, setGroups] = useState([]);
+  const [recentGames, setRecentGames] = useState();
+  const [aboutMe, setAboutMe] = useState();
+  const [topFriends, setTopFriends] = useState();
+  const [friendCount, setFriendCount] = useState();
+  const [profileNotExist, setProfileNotExist] = useState(false);
+  const [steamProfileUrl, setSteamProfileUrl] = useState('');
+
+  const [totalNumComments, setTotalNumComments] = useState();
+  const [commentsPageNum, setCommentsPageNum] = useState();
+  const [comments, setComments] = useState([]);
 
   useEffect(() => {
     (async function getSteamProfile() {
       try {
         const response = await fetch(`http://localhost:5000${pathname}`);
         const profileData = await response.json();
-        const sp = steamProfileParser(profileData);
-        setSteamProfile(sp);
+        const steamProfile = steamProfileParser(profileData);
+        if (steamProfile) {
+          setUser(steamProfile.getUser());
+          setGroups(steamProfile.getGroups());
+          setProfileIsPrivate(steamProfile.isPrivate());
+          setSteamProfileUrl(`https://steamcommunity.com${pathname}`);
+          setUserStatus(steamProfile.getActivity());
+          setRecentGames(steamProfile.getRecentGames());
+          setAboutMe(steamProfile.getSummary());
+          setTopFriends(steamProfile.getTopFriends());
+          setFriendCount(steamProfile.getFriendCount());
+
+          setTotalNumComments(steamProfile.getCommentCount());
+        } else {
+          setProfileNotExist(true);
+        }
       } catch (error) {
         console.error(error);
       }
@@ -35,13 +60,7 @@ function Profile() {
   }, [pathname]);
 
   useEffect(() => {
-    if (steamProfile) {
-      setSteamProfileUrl(`https://steamcommunity.com${pathname}`);
-    }
-  }, [steamProfile, pathname]);
-
-  useEffect(() => {
-    if (steamProfile && !steamProfile.isPrivate()) {
+    if (!profileNotExist && !profileIsPrivate) {
       (async function getSteamProfileComments() {
         try {
           const response = await fetch(
@@ -54,44 +73,43 @@ function Profile() {
         }
       })();
     }
-  }, [steamProfile, pathname, commentsPageNum]);
+  }, [commentsPageNum, profileNotExist, pathname, profileIsPrivate]);
 
   if (isLoading) {
     return null;
   }
 
-  if (!steamProfile) {
+  if (profileNotExist) {
     return <h1>you should redirect to a 404 page or something</h1>;
   }
 
   return (
     <div className={styles.profileContainer}>
-      <div className={styles.profileContentLeft}>
-        <User user={steamProfile.getUser()} isPrivate={steamProfile.isPrivate()} />
+      <div className={`${styles.profileContentLeft} ${styles.contentColumn}`}>
+        <User user={user} isPrivate={profileIsPrivate} />
         <SteamcommunityUrl url={steamProfileUrl} />
-        {steamProfile.isPrivate() ? null : (
+        {profileIsPrivate ? null : (
           <>
             <UserLinks baseUrl={steamProfileUrl} />
-            <UserGroups groups={steamProfile.getGroups()} />
+            {groups && <UserGroups groups={groups} />}
           </>
         )}
       </div>
 
-      <div className={styles.profileContentRight}>
+      <div className={`${styles.profileContentRight} ${styles.contentColumn}`}>
         <ProfileStatus
-          isPrivate={steamProfile.isPrivate()}
-          username={steamProfile.getUser().username}
-          activity={steamProfile.getActivity()}
+          isPrivate={profileIsPrivate}
+          username={user.username}
+          activity={userStatus}
         />
-        {steamProfile.isPrivate() ? null : (
+        {profileIsPrivate ? null : (
           <>
-            <RecentGamesSection games={steamProfile.getRecentGames()} />
-            <Blurbs aboutMe={steamProfile.getSummary()} />
-            <FriendSpace friendData={steamProfile.getTopFriendsSection()} />
-            <Comments
-              commentsList={comments}
-              totalNumComments={steamProfile.getCommentCount()}
-            />
+            <RecentGamesSection games={recentGames} />
+            <Blurbs aboutMe={aboutMe} />
+            {friendCount > 0 && (
+              <FriendSpace username={user.username} top={topFriends} totalCount={friendCount} />
+            )}
+            <Comments commentsList={comments} totalCount={totalNumComments} />
           </>
         )}
       </div>
