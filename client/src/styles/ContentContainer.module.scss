@@ -10,10 +10,10 @@
 
 .boxed {
   > .header {
-    @include header-style(white, $dark-blue);
+    @include header-style(white, $blue);
   }
 
-  border: 2px solid $dark-blue;
+  border: 2px solid $blue;
 }
 
 .noBox {
