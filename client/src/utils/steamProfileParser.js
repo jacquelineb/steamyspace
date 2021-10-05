@@ -11,13 +11,14 @@ function steamProfileParser(profileHtml) {
   return {
     isPrivate,
     getActivity,
+    getBanStatus,
     getCommentCount,
+    getFriendCount,
     getGroups,
     getRecentGames,
     getSummary,
-    getUser,
     getTopFriends,
-    getFriendCount,
+    getUser,
   };
 
   function isPrivate() {
@@ -31,6 +32,45 @@ function steamProfileParser(profileHtml) {
       game,
       status,
     };
+  }
+
+  function getBanStatus() {
+    let profileBans = [];
+    const profileBanNodes = $('.profile_ban');
+    if (profileBanNodes.length) {
+      profileBans = profileBanNodes.toArray().map((profileBanNode) => {
+        const banDescription = profileBanNode.children[0].data.trim();
+        return banDescription;
+      });
+    }
+
+    return profileBans;
+  }
+
+  function getCommentCount() {
+    const commentSection = $('.commentthread_header')['0'];
+    if (commentSection) {
+      // Comment count is only displayed if user has over 6 comments on their page.
+      // If it's not displayed, then the only way to get it is to count the number of nodes that have a class of 'commentthread_comment'
+      const countNode = $('span[id$="_totalcount"]', commentSection);
+      if (countNode.length) {
+        return parseInt(countNode.text().replace(',', ''));
+      } else {
+        return parseInt($('.commentthread_comment').length);
+      }
+    } else {
+      return 0;
+    }
+  }
+
+  function getFriendCount() {
+    let friendCount = $('.profile_count_link_total', '.profile_friend_links').text().trim();
+    if (!friendCount) {
+      return 0;
+    } else {
+      friendCount = friendCount.replace(',', '');
+      return parseInt(friendCount);
+    }
   }
 
   function getGroups() {
@@ -50,29 +90,6 @@ function steamProfileParser(profileHtml) {
     } else {
       return null;
     }
-  }
-
-  function getUser() {
-    function getRealName() {
-      return $('.header_real_name > bdi').text();
-    }
-
-    function getLocation() {
-      const locationCheerio = $('.profile_flag')['0'];
-      if (locationCheerio) {
-        return locationCheerio.next.data.trim();
-      }
-      return null;
-    }
-
-    return {
-      username: $('.actual_persona_name').text().trim(),
-      avatar: $('.playerAvatarAutoSizeInner > img').attr('src'),
-      personalInfo: {
-        realName: getRealName(),
-        location: getLocation(),
-      },
-    };
   }
 
   function getRecentGames() {
@@ -99,16 +116,6 @@ function steamProfileParser(profileHtml) {
     return $('.profile_summary').html().trim();
   }
 
-  function getFriendCount() {
-    let friendCount = $('.profile_count_link_total', '.profile_friend_links').text().trim();
-    if (!friendCount) {
-      return 0;
-    } else {
-      friendCount = friendCount.replace(',', '');
-      return parseInt(friendCount);
-    }
-  }
-
   function getTopFriends() {
     const topFriends = $('.friendBlock', '.profile_topfriends')
       .toArray()
@@ -125,20 +132,27 @@ function steamProfileParser(profileHtml) {
     return topFriends;
   }
 
-  function getCommentCount() {
-    const commentSection = $('.commentthread_header')['0'];
-    if (commentSection) {
-      // Comment count is only displayed if user has over 6 comments on their page.
-      // If it's not displayed, then the only way to get it is to count the number of nodes that have a class of 'commentthread_comment'
-      const countNode = $('span[id$="_totalcount"]', commentSection);
-      if (countNode.length) {
-        return parseInt(countNode.text().replace(',', ''));
-      } else {
-        return parseInt($('.commentthread_comment').length);
-      }
-    } else {
-      return 0;
+  function getUser() {
+    function getRealName() {
+      return $('.header_real_name > bdi').text();
     }
+
+    function getLocation() {
+      const locationCheerio = $('.profile_flag')['0'];
+      if (locationCheerio) {
+        return locationCheerio.next.data.trim();
+      }
+      return null;
+    }
+
+    return {
+      username: $('.actual_persona_name').text().trim(),
+      avatar: $('.playerAvatarAutoSizeInner > img').attr('src'),
+      personalInfo: {
+        realName: getRealName(),
+        location: getLocation(),
+      },
+    };
   }
 }
 

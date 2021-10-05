@@ -12,6 +12,7 @@
   }
 }
 
+
 .gameCard {
   display: flex;
   flex-direction: row-reverse;
@@ -19,6 +20,10 @@
   align-items: center;
   gap: 10px;
   margin: 10px 0;
+}
+
+.gameName {
+  font-weight: bold;
 }
 
 .gameCover {

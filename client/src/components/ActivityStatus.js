@@ -1,9 +1,9 @@
 import React from 'react';
-import styles from '../styles/ProfileStatus.module.scss';
+import styles from '../styles/ActivityStatus.module.scss';
 
-function ProfileStatus({ isPrivate, activity, username }) {
+function ActivityStatus({ isPrivate, activity, username }) {
   return (
-    <div className={styles.profileStatus}>
+    <div className={styles.status}>
       {isPrivate ? (
         <p>This profile is set to private.</p>
       ) : activity.game ? (
@@ -19,4 +19,4 @@ function ProfileStatus({ isPrivate, activity, username }) {
   );
 }
 
-export default ProfileStatus;
+export default ActivityStatus;

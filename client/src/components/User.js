@@ -8,7 +8,6 @@ function User({ user, isPrivate }) {
       <p className={styles.username}>{user.username}</p>
       <div className={styles.mainContent}>
         <img src={user.avatar} alt='User avatar' />
-
         <div className={styles.userDescription}>
           {isPrivate ? (
             <p>My privacy settings don't allow you to view this data. =(</p>

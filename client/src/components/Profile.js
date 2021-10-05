@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import User from './User';
-import ProfileStatus from './ProfileStatus';
+import ActivityStatus from './ActivityStatus';
 import RecentGamesSection from './RecentGamesSection';
 import SteamcommunityUrl from './SteamcommunityUrl';
 import Blurbs from './Blurbs';
@@ -9,6 +9,7 @@ import UserLinks from './UserLinks';
 import UserGroups from './UserGroups';
 import Comments from './Comments';
 import FriendSpace from './FriendSpace';
+import BanStatus from './BanStatus';
 import styles from '../styles/Profile.module.scss';
 import { steamProfileParser, steamCommentsParser } from '../utils/steamProfileParser';
 
@@ -20,12 +21,13 @@ function Profile() {
   const [userStatus, setUserStatus] = useState();
   const [profileIsPrivate, setProfileIsPrivate] = useState(true);
   const [groups, setGroups] = useState([]);
-  const [recentGames, setRecentGames] = useState();
+  const [recentGames, setRecentGames] = useState([]);
   const [aboutMe, setAboutMe] = useState();
   const [topFriends, setTopFriends] = useState();
   const [friendCount, setFriendCount] = useState();
   const [profileNotExist, setProfileNotExist] = useState(false);
   const [steamProfileUrl, setSteamProfileUrl] = useState('');
+  const [bans, setBans] = useState([]);
 
   const [totalNumComments, setTotalNumComments] = useState();
   const [commentsPageNum, setCommentsPageNum] = useState();
@@ -39,15 +41,15 @@ function Profile() {
         const steamProfile = steamProfileParser(profileData);
         if (steamProfile) {
           setUser(steamProfile.getUser());
-          setGroups(steamProfile.getGroups());
           setProfileIsPrivate(steamProfile.isPrivate());
           setSteamProfileUrl(`https://steamcommunity.com${pathname}`);
+          setBans(steamProfile.getBanStatus());
+          setGroups(steamProfile.getGroups());
           setUserStatus(steamProfile.getActivity());
           setRecentGames(steamProfile.getRecentGames());
           setAboutMe(steamProfile.getSummary());
-          setTopFriends(steamProfile.getTopFriends());
           setFriendCount(steamProfile.getFriendCount());
-
+          setTopFriends(steamProfile.getTopFriends());
           setTotalNumComments(steamProfile.getCommentCount());
         } else {
           setProfileNotExist(true);
@@ -97,11 +99,13 @@ function Profile() {
       </div>
 
       <div className={`${styles.profileContentRight} ${styles.contentColumn}`}>
-        <ProfileStatus
+        <ActivityStatus
           isPrivate={profileIsPrivate}
           username={user.username}
           activity={userStatus}
         />
+        {bans.length > 0 && <BanStatus bans={bans} />}
+
         {profileIsPrivate ? null : (
           <>
             <RecentGamesSection games={recentGames} />
